@@ -1,10 +1,9 @@
 import type {
-  Evento,
   LoginData,
   LoginResponse,
   RegisterData,
   Usuario,
-} from "../types/types";
+} from "../../types/types";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -67,22 +66,4 @@ export const updatePerfil = async (usuario: Usuario): Promise<Usuario> => {
   if (!res.ok) throw new Error("Erro ao atualizar perfil.");
 
   return res.json();
-};
-
-export const criarEvento = async (evento: Evento, token: string) => {
-  const response = await fetch(`${BASE_URL}/eventos`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(evento),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Erro ao criar evento.");
-  }
-
-  return response.json();
 };

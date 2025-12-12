@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Toast } from "../../ui/toast";
 import { Link, useNavigate } from "react-router-dom";
-import { registrar } from "../../api";
+import { registrar } from "../../api/usuario";
 
 const Registro = () => {
   const [nome, setNome] = useState("");

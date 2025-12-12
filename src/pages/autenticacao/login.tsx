@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Toast } from "../../ui/toast";
-import { login } from "../../api";
+import { login } from "../../api/usuario";
 
 const Login = () => {
   const [email, setEmail] = useState("");

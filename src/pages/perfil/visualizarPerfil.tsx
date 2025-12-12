@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import type { Usuario } from "../../types/types";
 import { Toast } from "../../ui/toast";
-import { getPerfil, updatePerfil } from "../../api";
+import { getPerfil, updatePerfil } from "../../api/usuario";
 
 const VisualizarPerfil = () => {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
