@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Toast } from "../../ui/toast";
 import { Link, useNavigate } from "react-router-dom";
+import { registrar } from "../../api";
 
 const Registro = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [cidade, setCidade] = useState("");
-  const [urlFoto, setUrlFoto] = useState("");
-  const [papelUsuario, setPapelUsuario] = useState("PARTICIPANTE"); // Default to "PARTICIPANTE"
+  const [papelUsuario, setPapelUsuario] = useState<
+    "PARTICIPANTE" | "ORGANIZADOR"
+  >("PARTICIPANTE");
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"success" | "error">("success");
 
@@ -17,27 +19,13 @@ const Registro = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const registerData = { nome, email, senha, cidade, urlFoto, papelUsuario };
-
     try {
-      const response = await fetch("http://localhost:8080/auth/registrar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(registerData),
+      await registrar({ nome, email, senha, cidade, papelUsuario });
+      navigate("/login", {
+        state: { message: "Cadastro realizado com sucesso!" },
       });
-
-      if (response.ok) {
-        navigate("/login", {
-          state: { message: "Cadastro realizado com sucesso!" },
-        });
-      } else {
-        const errorData = await response.json();
-        const errorMessage = errorData?.message || "Erro ao registrar usuário.";
-        setToastMessage(errorMessage);
-        setToastType("error");
-      }
-    } catch {
-      setToastMessage("Erro de rede, tente novamente.");
+    } catch (err: any) {
+      setToastMessage(err.message || "Erro de rede, tente novamente.");
       setToastType("error");
     }
   };
@@ -87,20 +75,12 @@ const Registro = () => {
           />
         </div>
         <div>
-          <label className="block text-sm">URL da Foto</label>
-          <input
-            type="url"
-            value={urlFoto}
-            onChange={(e) => setUrlFoto(e.target.value)}
-            required
-            className="w-full px-4 py-2 border rounded-md text-sm"
-          />
-        </div>
-        <div>
           <label className="block text-sm">Papel do Usuário</label>
           <select
             value={papelUsuario}
-            onChange={(e) => setPapelUsuario(e.target.value)}
+            onChange={(e) =>
+              setPapelUsuario(e.target.value as "PARTICIPANTE" | "ORGANIZADOR")
+            }
             className="w-full px-4 py-2 border rounded-md text-sm"
           >
             <option value="PARTICIPANTE">Participante</option>

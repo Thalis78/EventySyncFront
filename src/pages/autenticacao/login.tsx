@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Toast } from "../../ui/toast";
+import { login } from "../../api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,45 +13,27 @@ const Login = () => {
 
   useEffect(() => {
     if (location.state?.message) {
-      const timeout = setTimeout(() => {
-        setToastMessage(location.state.message);
-        setToastType("success");
-      }, 0);
-      return () => clearTimeout(timeout);
+      setToastMessage(location.state.message);
+      setToastType("success");
     }
   }, [location.state?.message]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const loginData = { email, senha };
-
     try {
-      const response = await fetch("http://localhost:8080/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
-      });
+      const data = await login({ email, senha });
 
-      if (response.ok) {
-        const data = await response.json();
+      localStorage.setItem("idUsuario", data.idUsuario);
+      localStorage.setItem("papelUsuario", data.papelUsuario);
+      localStorage.setItem("token", data.token);
 
-        localStorage.setItem("idUsuario", data.idUsuario);
-        localStorage.setItem("papelUsuario", data.papelUsuario);
-        localStorage.setItem("token", data.token);
-
-        if (data.papelUsuario === "ORGANIZADOR") {
-          navigate("/organizador/eventos");
-        } else {
-          navigate("/eventos");
-        }
+      if (data.papelUsuario === "ORGANIZADOR") {
+        navigate("/organizador/eventos");
       } else {
-        const { message } = await response.json();
-        setToastMessage(message || "Erro ao fazer login.");
-        setToastType("error");
+        navigate("/eventos");
       }
-    } catch (error) {
-      console.log(error);
-      setToastMessage("Erro de rede, tente novamente.");
+    } catch (err: any) {
+      setToastMessage(err.message || "Erro de rede, tente novamente.");
       setToastType("error");
     }
   };
