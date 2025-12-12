@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Toast } from "../../ui/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { registrar } from "../../api/usuario";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 const Registro = () => {
   const [nome, setNome] = useState("");
@@ -15,6 +16,11 @@ const Registro = () => {
   const [toastType, setToastType] = useState<"success" | "error">("success");
 
   const navigate = useNavigate();
+  const { redirecionarParaTelaDeHome } = useAuthRedirect();
+
+  useEffect(() => {
+    redirecionarParaTelaDeHome();
+  }, []);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

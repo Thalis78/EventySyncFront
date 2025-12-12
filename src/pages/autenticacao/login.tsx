@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Toast } from "../../ui/toast";
 import { login } from "../../api/usuario";
+import { useAuthRedirect } from "../../hooks/useAuthRedirect";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"success" | "error">("success");
-  const navigate = useNavigate();
   const location = useLocation();
+  const { redirecionarParaTelaDeHome } = useAuthRedirect();
 
   useEffect(() => {
     if (location.state?.message) {
@@ -27,11 +28,7 @@ const Login = () => {
       localStorage.setItem("papelUsuario", data.papelUsuario);
       localStorage.setItem("token", data.token);
 
-      if (data.papelUsuario === "ORGANIZADOR") {
-        navigate("/organizador/eventos");
-      } else {
-        navigate("/eventos");
-      }
+      redirecionarParaTelaDeHome;
     } catch (err: any) {
       setToastMessage(err.message || "Erro de rede, tente novamente.");
       setToastType("error");
