@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/autenticacao/login";
 import { Registro } from "./pages/autenticacao/registro";
 import { VisualizarPerfil } from "./pages/perfil/visualizarPerfil";
-import { EditarPerfil } from "./pages/perfil/editarPerfil";
 import { EventosOrganizador } from "./pages/organizador/eventosOrganizador";
 import { CadastrarEvento } from "./pages/organizador/cadastrarEvento";
 import { EditarEvento } from "./pages/organizador/editarEvento";
@@ -15,7 +14,6 @@ export function AppRoutes() {
       <Route path="/registro" element={<Registro />} />
 
       <Route path="/perfil" element={<VisualizarPerfil />} />
-      <Route path="/perfil/editar" element={<EditarPerfil />} />
 
       <Route path="/organizador/eventos" element={<EventosOrganizador />} />
       <Route
