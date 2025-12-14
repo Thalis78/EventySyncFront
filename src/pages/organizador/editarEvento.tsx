@@ -4,7 +4,7 @@ import { Toast } from "../../ui/toast";
 import { editarEvento, buscarEventoPorId } from "../../api/evento";
 import type { Evento } from "../../types/types";
 
-const EditarEvento: React.FC = () => {
+const EditarEvento = () => {
   const { id } = useParams();
   const idEvento = Number(id);
 
