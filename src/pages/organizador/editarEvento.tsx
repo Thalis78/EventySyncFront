@@ -15,6 +15,11 @@ const EditarEvento: React.FC = () => {
 
   const token = localStorage.getItem("token");
 
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    return d.toISOString().split(".")[0];
+  };
+
   useEffect(() => {
     const carregarEvento = async () => {
       if (!token || !idEvento) return;
@@ -55,7 +60,7 @@ const EditarEvento: React.FC = () => {
     try {
       const eventoComOrganizador = {
         ...evento,
-        organizadorId: evento.organizadorId,
+        organizadorId: Number(localStorage.getItem("idUsuario")),
       };
       await editarEvento(idEvento, eventoComOrganizador, token);
       setToastMessage("Evento atualizado com sucesso!");
@@ -112,7 +117,7 @@ const EditarEvento: React.FC = () => {
           </label>
           <input
             type="datetime-local"
-            value={evento.dataHoraInicio}
+            value={formatDate(evento.dataHoraInicio)}
             onChange={(e) => handleChange("dataHoraInicio", e.target.value)}
             className="w-full px-4 py-2 border rounded-md text-sm"
             required
@@ -125,7 +130,7 @@ const EditarEvento: React.FC = () => {
           </label>
           <input
             type="datetime-local"
-            value={evento.dataHoraFinal}
+            value={formatDate(evento.dataHoraFinal)}
             onChange={(e) => handleChange("dataHoraFinal", e.target.value)}
             className="w-full px-4 py-2 border rounded-md text-sm"
             required
@@ -214,7 +219,7 @@ const EditarEvento: React.FC = () => {
           </label>
           <input
             type="datetime-local"
-            value={evento.inscricaoAbre}
+            value={formatDate(evento.inscricaoAbre)}
             onChange={(e) => handleChange("inscricaoAbre", e.target.value)}
             className="w-full px-4 py-2 border rounded-md text-sm"
             required
@@ -227,7 +232,7 @@ const EditarEvento: React.FC = () => {
           </label>
           <input
             type="datetime-local"
-            value={evento.inscricaoFecha}
+            value={formatDate(evento.inscricaoFecha)}
             onChange={(e) => handleChange("inscricaoFecha", e.target.value)}
             className="w-full px-4 py-2 border rounded-md text-sm"
             required

@@ -27,6 +27,11 @@ const CadastrarEvento = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
 
+    const formatDate = (date: string) => {
+      const d = new Date(date);
+      return d.toISOString().split(".")[0];
+    };
+
     try {
       await criarEvento(
         {
@@ -40,8 +45,8 @@ const CadastrarEvento = () => {
           statusEvento,
           maxInscricao,
           cargaHoraria,
-          inscricaoAbre,
-          inscricaoFecha,
+          inscricaoAbre: formatDate(inscricaoAbre),
+          inscricaoFecha: formatDate(inscricaoFecha),
           inscricaoAberta,
           organizadorId: Number(localStorage.getItem("idUsuario")),
         },
