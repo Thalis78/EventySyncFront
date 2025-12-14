@@ -34,7 +34,7 @@ export const Toast = ({
 
   return (
     <div
-      className={`fixed top-4 right-4 p-4 rounded-md shadow-lg text-white transition-opacity duration-500 ${
+      className={`fixed top-24 right-4 p-4 rounded-md shadow-lg text-white transition-opacity duration-500 ${
         variants[variant]
       } ${!isVisible ? "opacity-0" : "opacity-100"}`}
     >
