@@ -12,7 +12,6 @@ export type Usuario = {
   email: string;
   hashSenha: string;
   cidade: string;
-  urlFoto: string | null;
   visibilidadeParticipacao: boolean;
   papelUsuario: "ORGANIZADOR" | "PARTICIPANTE";
 };
