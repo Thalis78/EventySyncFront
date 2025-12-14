@@ -1,5 +1,10 @@
 export type TipoEvento = "GRATUITO" | "PAGO";
 export type StatusEvento = "RASCUNHO" | "ABERTO" | "FINALIZADO";
+export type StatusInscricao =
+  | "PENDENTE"
+  | "CANCELADA"
+  | "APROVADA"
+  | "AGUARDANDO_PAGAMENTO";
 
 export type Usuario = {
   id: number;
@@ -47,4 +52,14 @@ export type Evento = {
   cargaHoraria: number;
   inscricaoAberta: boolean;
   organizadorId: number;
+};
+
+export type InscricaoEventoResponseDTO = {
+  id: number;
+  idInscrito: number;
+  tituloEvento: string;
+  statusInscricao: StatusInscricao;
+  dataHoraInscricao: Date | null;
+  cargaHoraria: number;
+  tipoEvento: TipoEvento;
 };
